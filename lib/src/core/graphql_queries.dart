@@ -148,6 +148,17 @@ class GraphQLQueries {
               latitude
               longitude
             }
+            stations {
+              ...on PointOfInterest {
+                objectId
+                title
+                desctiption
+                position {
+                  latitude
+                  longitude
+                }
+              }
+            }
           }
         }
       }

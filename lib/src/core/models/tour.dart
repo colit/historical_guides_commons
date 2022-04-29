@@ -1,3 +1,4 @@
+import 'package:geojson_vi/geojson_vi.dart';
 import 'package:historical_guides_commons/src/core/models/point_of_interest.dart';
 import 'package:latlong2/latlong.dart';
 
@@ -22,6 +23,32 @@ class Tour {
   final LatLng boundsNE;
   final String? vectorAssets;
   final List<PointOfInterest> pointsOfInterest;
+
+  Map<String, dynamic> get poisAsGeoJson {
+    List<GeoJSONFeature> features = [];
+    var index = 0;
+
+    for (final point in pointsOfInterest) {
+      if (!point.removed) {
+        final map = {
+          'type': 'Point',
+          'coordinates': [
+            point.position.longitude,
+            point.position.latitude,
+          ]
+        };
+        final geometry = GeoJSONGeometry.fromMap(map);
+        features.add(GeoJSONFeature(
+          geometry,
+          properties: {
+            'uuid': index++,
+          },
+        ));
+      }
+    }
+    final featureCollection = GeoJSONFeatureCollection(features);
+    return featureCollection.toMap();
+  }
 
   Tour copyWith({
     String? name,
@@ -71,6 +98,7 @@ class Tour {
   }
 
   factory Tour.fromGraphQL(dynamic node) {
+    final points = List<Map<String, dynamic>>.from(node['stations'] ?? []);
     return Tour._(
       node['objectId'],
       node['name'],
@@ -83,7 +111,8 @@ class Tour {
       LatLng(node['latitudeSW'], node['longitudeSW']),
       LatLng(node['latitudeNE'], node['longitudeNE']),
       node['vectorAssets']['url'],
-      node['pointsOfInterest'] ?? [],
+      node['pointsOfInterest'] ??
+          [for (final point in points) PointOfInterest.fromGraphQL(point)],
     );
   }
 }
