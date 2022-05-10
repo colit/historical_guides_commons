@@ -132,6 +132,7 @@ class GraphQLQueries {
           node {
             objectId
             name
+            description
             length
             latitudeNE
             longitudeNE
@@ -152,7 +153,7 @@ class GraphQLQueries {
               ...on PointOfInterest {
                 objectId
                 title
-                desctiption
+                description
                 position {
                   latitude
                   longitude
