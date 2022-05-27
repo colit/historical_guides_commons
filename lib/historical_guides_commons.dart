@@ -7,3 +7,6 @@ export 'src/base/base_widget.dart';
 export 'src/core/graphql_queries.dart';
 export 'src/core/models/tour.dart';
 export 'src/core/models/station.dart';
+export 'src/core/models/image_entity.dart';
+export 'src/widgets/network_image_widget.dart';
+export 'src/widgets/size_detector_widget.dart';

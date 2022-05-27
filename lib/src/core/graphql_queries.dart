@@ -106,6 +106,7 @@ class GraphQLQueries {
       images (where: {uuid: {equalTo: $id}}) {
         edges {
           node {
+            objectId
             uuid
             published
             title
@@ -116,7 +117,12 @@ class GraphQLQueries {
             licenseURL
             source
             sourceURL
+            location {
+              latitude
+              longitude
+            }
             image {
+              name
               url
             }
           }
@@ -157,6 +163,19 @@ class GraphQLQueries {
                 position {
                   latitude
                   longitude
+                }
+                images {
+                  ...on Image {
+                    uuid
+                    objectId
+                    location {
+                      latitude
+                      longitude
+                    }
+                    image {
+                      url
+                    }
+                  }
                 }
               }
             }

@@ -117,7 +117,7 @@ class Tour {
   }
 
   factory Tour.fromGraphQL(dynamic node) {
-    final points = List<Map<String, dynamic>>.from(node['stations'] ?? []);
+    final stations = List<Map<String, dynamic>>.from(node['stations'] ?? []);
     return Tour._(
       node['objectId'],
       node['name'],
@@ -131,7 +131,7 @@ class Tour {
       LatLng(node['latitudeSW'], node['longitudeSW']),
       LatLng(node['latitudeNE'], node['longitudeNE']),
       node['vectorAssets']?['url'],
-      [for (final point in points) Station.fromGraphQL(point)],
+      [for (final point in stations) Station.fromGraphQL(point)],
     );
   }
 }

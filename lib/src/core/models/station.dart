@@ -1,3 +1,4 @@
+import 'package:historical_guides_commons/historical_guides_commons.dart';
 import 'package:latlong2/latlong.dart';
 
 class Station {
@@ -6,6 +7,7 @@ class Station {
     required this.titel,
     this.description,
     required this.position,
+    this.images = const [],
     this.removed = false,
     this.hidden = false,
   });
@@ -15,6 +17,7 @@ class Station {
   final String? description;
   final bool removed;
   final bool hidden;
+  final List<ImageEntity> images;
 
   Station copyWith({
     String? titel,
@@ -22,6 +25,7 @@ class Station {
     LatLng? position,
     bool? removed,
     bool? hidden,
+    List<ImageEntity>? images,
   }) {
     return Station(
       id: id,
@@ -30,6 +34,7 @@ class Station {
       position: position ?? this.position,
       removed: removed ?? this.removed,
       hidden: hidden ?? this.hidden,
+      images: images ?? this.images,
     );
   }
 
@@ -42,6 +47,7 @@ class Station {
   }
 
   factory Station.fromGraphQL(Map<String, dynamic> node) {
+    final images = node['images'];
     return Station(
       id: node['objectId'],
       titel: node['title'],
@@ -50,6 +56,9 @@ class Station {
         node['position']['latitude'],
         node['position']['longitude'],
       ),
+      images: images == null
+          ? []
+          : [for (final image in images) ImageEntity.fromQuery(image)],
     );
   }
 }
