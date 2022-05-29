@@ -1,7 +1,7 @@
 name: historical_guides_commons
 description: Commom classes for Peligrim Project.
 publish_to: 'none'
-version: 0.0.1
+version: 0.0.2
 homepage: consta.de
 
 environment:
@@ -15,6 +15,8 @@ dependencies:
   latlong2: ^0.8.1
   geojson_vi: ^2.0.7
   flutter_markdown: ^0.6.10
+  pointer_interceptor:
+    path: ../../pub_dev/packages/packages/pointer_interceptor
 
 dev_dependencies:
   flutter_test:
