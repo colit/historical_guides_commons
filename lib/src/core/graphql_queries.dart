@@ -168,6 +168,7 @@ class GraphQLQueries {
                   ...on Image {
                     uuid
                     objectId
+                    title
                     location {
                       latitude
                       longitude
